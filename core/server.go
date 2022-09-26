@@ -38,14 +38,14 @@ func (s *Server) submit(w http.ResponseWriter, req *http.Request) {
 	content := fmt.Sprintf(Template, hex.EncodeToString(body))
 	fileName := GetRandomString(16)
 
-	err = ioutil.WriteFile(fileName, []byte(content), 0x0644)
+	err = ioutil.WriteFile(fileName, []byte(content), 0644)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
 	defer os.Remove(fileName)
 
-	cmd := exec.Command("cardano-cli", "transaction", "submit", "--tx-file", fileName, "tx.signed", "--testnet-magic", "1")
+	cmd := exec.Command("cardano-cli", "transaction", "submit", "--tx-file", fileName, "--testnet-magic", "1")
 	out, err := cmd.CombinedOutput()
 
 	if err != nil {
