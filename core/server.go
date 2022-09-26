@@ -28,6 +28,7 @@ func NewServer() *Server {
 }
 
 func (s *Server) submit(w http.ResponseWriter, req *http.Request) {
+	fmt.Println("There is a new request.")
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		http.Error(w, "Invalid request", 400)
@@ -53,7 +54,7 @@ func (s *Server) submit(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	fmt.Println(out)
+	fmt.Println(string(out))
 }
 
 func (s *Server) Run() {
